@@ -67,6 +67,8 @@ module FFMPEG
             if line.include?("time=")
               if line =~ /time=(\d+):(\d+):(\d+.\d+)/ # ffmpeg 0.8 and above style
                 time = ($1.to_i * 3600) + ($2.to_i * 60) + $3.to_f
+              elsif line =~ /time=(\d+[.]\d+)/  # ubuntu's avconv uses e.g. time=2.3
+                time = $1.to_f
               else # better make sure it wont blow up in case of unexpected output
                 time = 0.0
               end
